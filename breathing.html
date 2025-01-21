@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing Exercises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #a8c0ff, #3f2b96);
+            color: #fff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .video-container iframe {
+            width: 300px;
+            height: 200px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 30px auto;
+            background: #6a11cb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 150px;
+        }
+
+        .back-btn:hover {
+            background: #2575fc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Breathing Exercises</h1>
+        <div class="video-container" id="videoContainer"></div>
+        <button class="back-btn" onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        // Function to retrieve age from localStorage
+        function getAge() {
+            return parseInt(localStorage.getItem('age'), 10);
+        }
+
+        // Function to display videos based on the age group
+        function displayVideos() {
+            const age = getAge();
+            const videoContainer = document.getElementById('videoContainer');
+
+            // Define videos for different age groups
+            const videosByAge = {
+                "40-59": [
+                    "https://www.youtube.com/embed/XXCn_2VH3tE?si=JsRp7OD8a-73HbHp",
+                    "https://www.youtube.com/embed/blbv5UTBCGg?si=KFc2bUWrI_NADllo"
+                ],
+                "60-80": [
+                    "https://www.youtube.com/embed/C4bofW53sO8?si=5okvb4SIgAJU5E_F"
+                ]
+            };
+
+            // Determine the age group
+            let ageGroup = "";
+            if (age >= 40 && age <= 59) {
+                ageGroup = "40-59";
+            } else if (age >= 60 && age <= 80) {
+                ageGroup = "60-80";
+            }
+
+            // Display videos for the determined age group
+            if (videosByAge[ageGroup]) {
+                videosByAge[ageGroup].forEach(video => {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = video;
+                    iframe.allowFullscreen = true;
+                    videoContainer.appendChild(iframe);
+                });
+            } else {
+                videoContainer.innerHTML = "<p>No videos available for your age group.</p>";
+            }
+        }
+
+        // Call the display function
+        displayVideos();
+    </script>
+</body>
+</html>
